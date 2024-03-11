@@ -6,6 +6,8 @@ const Home = () => {
   const [sensorData, setSensorData] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState('');
   const navigate =useNavigate();
   useEffect(()=>{
     if(!localStorage.getItem('token')){
@@ -18,8 +20,6 @@ const Home = () => {
       try {
         const response = await axios.get('http://127.0.0.1:5000/sensor-data');
         setSensorData(prevData => response.data.result);
-
-        console.log(sensorData)
         if (response.data.result.result === 'Level:1 - MODERATE ') {
           setShowAlert(true);
           setAlertMessage('SMS alert sent to number: 6302667331');          
@@ -32,10 +32,18 @@ const Home = () => {
           setShowAlert(false);
           setAlertMessage('');
         }
-        // await axios.post('https://healthguard-backend.onrender.com/api/sensor-data', response.data.result);
-
+        if (response.data.result.result === 'Place Your Finger Properly!!!') {
+          setSensorData(null); // Empty sensor data
+          setShowMessage(true);
+          setMessage('Place Your Finger Properly!!!');
+        } else {
+          setShowMessage(false);
+          setMessage('');
+        }
       } catch (error) {
         console.error('Error fetching sensor data:', error);
+        setShowMessage(true);
+        setMessage('Ensure you connect the kit properly or there might be some error in reading the data.');
       }
     };
 
@@ -49,10 +57,7 @@ const Home = () => {
 
 
   return (
-    <div className='home'>
-    {/* <div className='image'> 
-        <img width="100%" height="100%" className='homepage_image' src="" alt="homepage"/>
-    </div> */}
+    <div className='home-container'>
     <div className='heading'>
         <h2>WELCOME TO HEALTHGUARD!!!</h2><br/> <br/>
     </div>
@@ -62,7 +67,12 @@ const Home = () => {
           <p className='alert-message'>{alertMessage}</p>
           </div>
         )}
-        {sensorData && (
+        {showMessage ? (
+          <div className='message'>
+            <p>{message}</p>
+          </div>
+        ) : (
+          !showMessage && sensorData && (
           <div className='Content'>
             <p className='data'>Temperature: {sensorData.t}</p>
             <p className='data'>Heartbeat: {sensorData.h}</p>
@@ -70,6 +80,7 @@ const Home = () => {
             <p className='data'>Fall Detected: {sensorData.f}</p>
             <p className='data'>Severity Level: {sensorData.result}</p>
           </div>
+        )
         )}
     </div>
     </div>

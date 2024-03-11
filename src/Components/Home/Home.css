@@ -2,12 +2,6 @@ body{
     background-color: none;
     background-image: none;
 }
-.Content_row{
-    display: flex;
-    z-index: 1;
-    margin-left: 5px;
-    margin-right: 5px;
-}
 .heading{
     display: flex;
     flex-direction: row;
@@ -19,6 +13,7 @@ body{
 }
  .heading h2{
     margin: 0;
+    overflow: hidden;
 } 
 
 .Content{
@@ -34,7 +29,6 @@ body{
 }
 
 .alert{
-    
     position: absolute;
     top: 10px;
     right: 50px;
@@ -51,4 +45,21 @@ body{
 .home{
     position: relative;
     padding-top: -80em;
+}
+
+.message{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-top: 2.5rem;
+}
+.message p{
+    margin:0;
+    background-color: #9e9999;
+    border-radius: 9px;
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
