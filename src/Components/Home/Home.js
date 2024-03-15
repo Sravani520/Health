@@ -21,7 +21,7 @@ const Home = () => {
         const response = await axios.get('http://127.0.0.1:5000/sensor-data');
         setSensorData(prevData => response.data.result);
         const userId = localStorage.getItem('userId');
-        await axios.post(`https://healthguard-backend-sensordatasave.onrender.com/${userId}`, {
+        await axios.post(`https://healthguard-backend-sensordatasave.onrender.com/sensor-data/${userId}`, {
         temperature: sensorData.t,
         heartbeat: sensorData.h,
         spo2: sensorData.s,
