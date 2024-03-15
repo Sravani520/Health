@@ -20,6 +20,15 @@ const Home = () => {
       try {
         const response = await axios.get('http://127.0.0.1:5000/sensor-data');
         setSensorData(prevData => response.data.result);
+        const userId = localStorage.getItem('userId');
+        await axios.post(`https://healthguard-backend-sensordatasave.onrender.com/${userId}`, {
+        temperature: sensorData.t,
+        heartbeat: sensorData.h,
+        spo2: sensorData.s,
+        fallDetected: sensorData.f,
+        severityLevel: sensorData.result,
+        });
+
         if (response.data.result.result === 'Level:1 - MODERATE ') {
           setShowAlert(true);
           setAlertMessage('SMS alert sent to number: 6302667331');          
