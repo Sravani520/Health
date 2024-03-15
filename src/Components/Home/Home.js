@@ -20,7 +20,7 @@ const Home = () => {
       try {
         const response = await axios.get('http://127.0.0.1:5000/sensor-data');
         setSensorData(prevData => response.data.result);
-        const userId = localStorage.getItem('userId');
+        // const userId = localStorage.getItem('userId');
         await axios.post('https://healthguard-backend-sensordatasave.onrender.com/sensor-data', {
         temperature: sensorData.t,
         heartbeat: sensorData.h,
