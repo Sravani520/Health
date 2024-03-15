@@ -65,6 +65,27 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [sensorData]);
 
+  useEffect(() => {
+    const postData = async () => {
+      try {
+        await axios.post('https://healthguard-backend-sensordatasave.onrender.com/sensor-data', {
+          temperature: sensorData.t,
+          heartbeat: sensorData.h,
+          spo2: sensorData.s,
+          fallDetected: sensorData.f,
+          severityLevel: sensorData.result,
+        });
+      } catch (error) {
+        console.error('Error posting sensor data:', error);
+      }
+    };
+  
+    if (sensorData) {
+      postData();
+    }
+  }, [sensorData]);
+  
+
 
   return (
     <div className='home-container'>
