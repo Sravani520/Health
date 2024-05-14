@@ -44,7 +44,27 @@ const Home = () => {
           setShowMessage(false);
           setMessage('');
         }
-
+        const sendSMSAlert = async (data, alertMessage, includeLocation = false) => {
+          let message = `Alert: Abnormal Sensor values found:
+          HB:${data.h} SPO2:${data.s} T:${data.t} F:${data.f}`;
+      
+          if (includeLocation) {
+            const location = '16°30\'30.6"N 80°39\'10.8"E'; // Example location; replace with actual data if available
+            message += ` LOCATION: ${location}`;
+          }
+      
+          try {
+            await axios.post('http://localhost:3001/send-alert', {
+              phoneNumber: '6302667331', // Replace with the actual phone number
+              message,
+            });
+            setShowAlert(true);
+            setAlertMessage(alertMessage);
+          } catch (error) {
+            console.error('Error sending SMS:', error);
+          }
+        };
+      
       } catch (error) {
         console.error('Error fetching sensor data:', error);
         setShowMessage(true);
@@ -58,27 +78,7 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const sendSMSAlert = async (data, alertMessage, includeLocation = false) => {
-    let message = `Alert: Abnormal Sensor values found:
-    HB:${data.h} SPO2:${data.s} T:${data.t} F:${data.f}`;
-
-    if (includeLocation) {
-      const location = '16°30\'30.6"N 80°39\'10.8"E'; // Example location; replace with actual data if available
-      message += ` LOCATION: ${location}`;
-    }
-
-    try {
-      await axios.post('http://localhost:3001/send-alert', {
-        phoneNumber: '6302667331', // Replace with the actual phone number
-        message,
-      });
-      setShowAlert(true);
-      setAlertMessage(alertMessage);
-    } catch (error) {
-      console.error('Error sending SMS:', error);
-    }
-  };
-
+  
   useEffect(() => {
     const postData = async () => {
       try {
