@@ -55,7 +55,7 @@ const Home = () => {
       
           try {
             await axios.post('http://localhost:3001/send-alert', {
-              phoneNumber: '6302667331', // Replace with the actual phone number
+              phoneNumber: '+916302667331', // Replace with the actual phone number
               message,
             });
             setShowAlert(true);
