@@ -55,8 +55,11 @@ const Home = () => {
       
           try {
             await axios.post('http://localhost:3001/send-alert', {
-              phoneNumber: '+916302667331', // Replace with the actual phone number
-              message,
+            phoneNumber: '+916302667331',
+            hb: data.h,
+            spo2: data.s,
+            temperature: data.t,
+            location: includeLocation ? location : null
             });
             setShowAlert(true);
             setAlertMessage(alertMessage);
