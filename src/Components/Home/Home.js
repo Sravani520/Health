@@ -47,7 +47,7 @@ const Home = () => {
         const sendSMSAlert = async (data, alertMessage, includeLocation = false) => {
           let message = `Alert: Abnormal Sensor values found:
           HB:${data.h} SPO2:${data.s} T:${data.t} F:${data.f}`;
-          
+
           const location = '16°30\'30.6"N 80°39\'10.8"E';
           if (includeLocation) {
              // Example location; replace with actual data if available
@@ -80,7 +80,7 @@ const Home = () => {
     const interval = setInterval(fetchData, 20000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [sensorData]);
 
   
   useEffect(() => {
