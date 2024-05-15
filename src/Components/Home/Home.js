@@ -59,7 +59,7 @@ const Home = () => {
             hb: sensorData.h,
             spo2: sensorData.s,
             temperature: sensorData.t,
-            location: includeLocation ? location : null
+            loc: includeLocation ? location : null
             });
             setShowAlert(true);
             setAlertMessage(alertMessage);
